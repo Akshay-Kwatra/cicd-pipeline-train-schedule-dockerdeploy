@@ -4,9 +4,10 @@ pipeline {
     registry = "ak15023/train-schedule-app"
     registryCredential = 'docker_hub_login'
     dockerImage = ''
-  }
+    }
     agent any
     stages {
+
         stage('Build') {
             steps {
                 echo 'Running build automation'
@@ -32,6 +33,7 @@ pipeline {
                 script {
                     docker.withRegistry( '', registryCredential ) {
                     dockerImage.push()
+                    }
                 }
             }
         }
