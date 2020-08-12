@@ -13,14 +13,14 @@ pipeline {
             steps{
                 script {
                     dockerImage = docker.build("ak15023/train-schedule-app")
-                    dockerImage.inside{ sh 'echo $(curl localhost:8080)'}
+                    dockerImage.inside { sh 'echo $(curl localhost:8080)'}
                 }
             }
         }
         stage('Push Docker Image') {
             steps{
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', docker_hub_login ) {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login' ) {
                     dockerImage.push("${env.BUIILD_ID}")
                     dockerImage.push("latest")
                     }
