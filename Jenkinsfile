@@ -13,7 +13,7 @@ pipeline {
             steps{
                 script {
                     dockerImage = docker.build("ak15023/train-schedule-app")
-                    deckerImage.inside{ sh 'echo $(curl localhost:8080)'}
+                    dockerImage.inside{ sh 'echo $(curl localhost:8080)'}
                 }
             }
         }
