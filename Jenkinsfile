@@ -40,11 +40,11 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]){
 
                     sh "sshpass -p $USERPASS -v ssh -o StrictHostKeyChecking=no $USERNAME@prod_ip \" docker pull ak15023/train-schedule-app:${env.BUIILD_ID}\""
-                    try{
+                    try {
                         sh "sshpass -p $USERPASS -v ssh -o StrictHostKeyChecking=no $USERNAME@prod_ip \" docker stop ak15023/train-schedule-app\""
                         sh "sshpass -p $USERPASS -v ssh -o StrictHostKeyChecking=no $USERNAME@prod_ip \" docker rm ak15023/train-schedule-app\""
                     }
-                    catch (err){
+                    catch (err) {
                         echo: 'caught error: $err'
                     }
                     sh "sshpass -p $USERPASS -v ssh -o StrictHostKeyChecking=no $USERNAME@prod_ip \"docker run --restart=always --name train-schedule-app :wq!-p 8080:8080 -d ak15023/train-schedule-app:${env.BUIILD_ID}\""
